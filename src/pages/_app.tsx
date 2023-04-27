@@ -1,11 +1,11 @@
 import type { AppProps } from "next/app";
-import '@/styles/globals.css'
-import 'tailwindcss/tailwind.css'
+import '@/styles/globals.css';
+import 'tailwindcss/tailwind.css';
 import '@rainbow-me/rainbowkit/styles.css';
 
 import { configureChains, createClient, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
-import { infuraProvider } from 'wagmi/providers/infura'
+import { infuraProvider } from 'wagmi/providers/infura';
 import { publicProvider } from 'wagmi/providers/public';
 
 import {
@@ -13,7 +13,7 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 
-const { chains, provider, webSocketProvider } = configureChains(
+const { chains, provider } = configureChains(
   [mainnet, polygon, optimism, arbitrum],
   [
     infuraProvider({ apiKey: 'https://mainnet.infura.io/v3/655dcda26fd949a295880de6a1f2940d' }),
@@ -27,14 +27,13 @@ const { connectors } = getDefaultWallets({
   chains
 });
 
-const wagmiClient = createClient({
+const  wagmiClient  = createClient({
   autoConnect: true,
   connectors,
-  provider,
-  webSocketProvider
+  provider
 })
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
@@ -43,5 +42,3 @@ function MyApp({ Component, pageProps }: AppProps) {
     </WagmiConfig>
   )
 }
-
-
